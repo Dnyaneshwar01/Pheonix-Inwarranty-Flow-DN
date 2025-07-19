@@ -28,7 +28,7 @@ jobs:
 
      - name: Run Postman Collection
        run: |
-         newman run 'Inwarranty-flow Collection.postman_collection.json'\
+         newman run 'Inwarranty-flow Collection.postman_collection.json' \
          -e QA.postman_environment.json \
          -d testData.csv \
          -r cli,htmlextra
@@ -40,11 +40,3 @@ jobs:
          name: newman-html-report
          path: newmam/*.html
         
-         
-     
-     
-     
-     
-     
-     
-    
