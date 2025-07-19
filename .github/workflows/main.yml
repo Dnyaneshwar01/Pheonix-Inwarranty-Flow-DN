@@ -1,43 +1,50 @@
- name : Postman Collection Workflow
- 
- on: 
-   push:
-     branches: [main]
-   workflow_dispatch:
-   schedule:
-     - cron : 30 02 * * * #8 am IST Every Day
-     - cron : 00 14 * * * # 7:30 pm IST Every Day
-     - cron : 00 06 * * 1-5 # 11:30 an IST Monday to Friday
+name: Postman Collection Workflow
 
- jobs:
-   run-postman-test:
-     runs-on: ubunto-latest
+on:
+  push:
+    branches: [main]   # Trigger when the code changes push in main branch
+  workflow_dispatch:   # For manually run workflow
+  schedule:
+   - cron: 00 06 * * *
+   - cron: 00 07 * * *   # set the trigger time for Every day run --> min hr month date day
+   - cron: 00 04 * * 1-5 # Run the workflow Monday to Friday and skips on Sat and Sun
 
-     steps:
-      - name: checkout the code
-        uses: actions/checkout@v4.2.2
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Checkout Code
+       uses: actions/checkout@v4.2.2
 
-      - name: Install nodejs and npm
-        uses: actions/setup-node@v3.9.1
-        with: 
-          node-version: '22'
+     - name: Setup Node
+       uses: actions/setup-node@v3.9.1
+       with:
+         node-version: '22'
 
-      - name: Install Newman and Html-extra globally
-        run: | 
-            npm install -g newman
-            npm install -g newman-reporter-htmlextra
+     - name: Install Newman and Reporter
+       run: |
+         npm install -g newman
+         npm install -g newman-reporter-htmlextra
 
-      - name: Run the postman Collection with newman
-        run: |
-            newman run 'Inwarranty-flow Collection.postman_collection.json' \
-            -e QA.postman_environment.json \
-            -d testData.csv \
-            -r cli,htmlextra            
-      - name: Newman Report
-        if: always() #ensure that irrespective whether the previous step has passed or not
-        uses: actions/upload-artifact@v4.6.2
-        with: 
-          name: Newman Report
-          path: newman/*.html
-          
+     - name: Run Postman Collection
+       run: |
+         newman run 'Inwarranty-flow Collection.postman_collection.json'\
+         -e QA.postman_environment.json \
+         -d testData.csv \
+         -r cli,htmlextra
+
+     - name: Upload Report
+       if: always()
+       uses: actions/upload-artifact@v4.6.2
+       with:
+         name: newman-html-report
+         path: newmam/*.html
         
+         
+     
+     
+     
+     
+     
+     
+    
