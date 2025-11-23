@@ -1,9 +1,11 @@
-About the project: 
-This repository contains a Postman API Test Collection designed to run using Postman UI, Newman CLI, Jenkins, and GitHub Actions. It provides a simple, maintainable, and CI-ready solution for automated API testing without needing a full programming framework.
+**About the project:**
+
+This repository contains a Postman API Test Collection designed to run using Postman UI, Newman CLI, Jenkins, and GitHub Actions. 
+It provides a simple, maintainable, and CI-ready solution for automated API testing without needing a full programming framework.
 
 With Newman, the collection can be executed locally or integrated into CI/CD pipelines, making it suitable for smoke tests, regression suites, and continuous validation across environments.
 
-How to run the Project?
+**How to run the Project?**
 
 You can run the project on your local system for that:
 
